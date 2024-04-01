@@ -1,4 +1,4 @@
-package de.wicked539;
+package io.github.wicked539;
 
 import liquibase.Liquibase;
 import liquibase.changelog.RanChangeSet;
