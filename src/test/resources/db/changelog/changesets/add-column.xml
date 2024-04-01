@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="1" author="wicked539">
+        <addColumn tableName="easteregg">
+            <column name="size" type="varchar(250)" defaultValue="M"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>
