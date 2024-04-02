@@ -14,25 +14,27 @@ import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Collection;
-import java.util.Optional;
 
 @Configuration
+// TODO: refactor to @ConditionalOnBean
 @ConditionalOnClass(SpringLiquibase.class)
 public class FailOnUnexpectedChangesetAutoConfiguration {
 
-    public FailOnUnexpectedChangesetAutoConfiguration(SpringLiquibase springLiquibase, DataSource dataSource) throws NoSuchMethodException, SQLException, InvocationTargetException, IllegalAccessException, LiquibaseException {
+    public FailOnUnexpectedChangesetAutoConfiguration(SpringLiquibase springLiquibase, DataSource dataSource)
+            throws NoSuchMethodException, SQLException, InvocationTargetException,
+            IllegalAccessException, LiquibaseException {
+
         Method createLiquibase = SpringLiquibase.class.getDeclaredMethod("createLiquibase", Connection.class);
         createLiquibase.setAccessible(true);
 
-        Liquibase liquibase;
+        try (Liquibase liquibase = (Liquibase) createLiquibase.invoke(springLiquibase, dataSource.getConnection())) {
+            Collection<RanChangeSet> unexpectedChangeSets =
+                    liquibase.listUnexpectedChangeSets(null, null);
 
-        try (Connection connection = dataSource.getConnection()) {
-            liquibase = (Liquibase) createLiquibase.invoke(springLiquibase, connection);
-            Collection<RanChangeSet> changeSets = liquibase.listUnexpectedChangeSets(null, null);
-
-            if (!changeSets.isEmpty()) {
-                Optional<String> changeSetIds = changeSets.stream().map(c -> c.getId() + " ").reduce(String::concat);
-                throw new ApplicationContextException("Unexpexted Liquibase Changesets found in db: " + changeSetIds.get());
+            if (!unexpectedChangeSets.isEmpty()) {
+                String changeSetIds = unexpectedChangeSets.stream()
+                        .map(c -> c.getId() + " ").reduce(String::concat).get().trim();
+                throw new ApplicationContextException("Unexpexted Liquibase Changesets found in db: " + changeSetIds);
             }
         }
     }

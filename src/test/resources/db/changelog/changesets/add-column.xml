@@ -4,7 +4,7 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <changeSet id="1" author="wicked539">
+    <changeSet id="2-add-size-column" author="wicked539">
         <addColumn tableName="easteregg">
             <column name="size" type="varchar(250)" defaultValue="M"/>
         </addColumn>
