@@ -4,9 +4,10 @@ import liquibase.Liquibase;
 import liquibase.changelog.RanChangeSet;
 import liquibase.exception.LiquibaseException;
 import liquibase.integration.spring.SpringLiquibase;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfiguration;
 import org.springframework.context.ApplicationContextException;
-import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
 import java.lang.reflect.InvocationTargetException;
@@ -15,8 +16,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Collection;
 
-@Configuration
-// TODO: refactor to @ConditionalOnBean
+@AutoConfiguration(after = { LiquibaseAutoConfiguration.class })
 @ConditionalOnClass(SpringLiquibase.class)
 public class FailOnUnexpectedChangesetAutoConfiguration {
 
