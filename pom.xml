@@ -4,7 +4,7 @@
 
     <groupId>io.github.wicked539</groupId>
     <artifactId>liquibase-unexpected-changeset-detector-spring-boot-autoconfigure</artifactId>
-    <version>0.2.0</version>
+    <version>0.2.1-SNAPSHOT</version>
 
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Small Spring Boot autoconfiguration library that checks
@@ -30,7 +30,7 @@
         <connection>scm:git:git://github.com/wicked539/liquibase-unexpected-changeset-detector-spring-boot-autoconfigure.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/wicked539/liquibase-unexpected-changeset-detector-spring-boot-autoconfigure.git</developerConnection>
         <url>https://github.com/wicked539/liquibase-unexpected-changeset-detector-spring-boot-autoconfigure/tree/main</url>
-      <tag>liquibase-unexpected-changeset-detector-spring-boot-autoconfigure-0.2.0</tag>
+      <tag>HEAD</tag>
   </scm>
 
     <properties>
